@@ -1,15 +1,13 @@
 package lesson10.supermarket;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class SupermarketDemo {
     public static void main(String[] args) {
-        Category dress = new Category("Платья");
-        Category pants = new Category("Брюки");
-        Category socks = new Category("Носки");
-
+        Category dress = new Category("Dress");
+        Category pants = new Category("Pants");
+        Category socks = new Category("Socks");
+        TreeSet<Product> products = new TreeSet<>();
         Category[] categories = {dress, pants, socks};
 
         User user = new User("Qwerty", "12345");
@@ -17,19 +15,25 @@ public class SupermarketDemo {
         Product product1 = new Product("Черное платье", 1599.0, 5, "Платья");
         Product product2 = new Product("Синие брюки", 1099.0, 4, "Брюки");
         Product product3 = new Product("Теплые носки", 89.99, 5, "Носки");
+        Product product4 = new Product("Красное платье", 12939.0, 3, "Платья");
+        Product product5 = new Product("Серые брюки", 1099.0, 4, "Брюки");
+        Product product6 = new Product("Летние носки", 39.99, 4, "Носки");
 
-        dress.setProducts(new Product[]{product1});
-        pants.setProducts(new Product[]{product2});
-        socks.setProducts(new Product[]{product3});
+        dress.addProduct(product4);
+        pants.addProduct(product2);
+        socks.addProduct(product3);
+        dress.addProduct(product1);
+        pants.addProduct(product5);
+        socks.addProduct(product6);
 
         Basket basket = new Basket();
         ArrayList<Product> list = new ArrayList<>(Arrays.asList(product1, product3));
         basket.setProducts(list);
-
         user.setBasket(basket);
 
         Scanner scanner = new Scanner(System.in);
         menu(scanner, categories, basket, user);
+
     }
 
     private static void menu(Scanner scanner, Category[] categories, Basket basket, User user) {
@@ -59,6 +63,7 @@ public class SupermarketDemo {
                     break;
                 case BUYPRODUCTS:
                     basket.buyProducts();
+
                     break;
             }
         }

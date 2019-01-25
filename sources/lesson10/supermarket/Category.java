@@ -1,12 +1,12 @@
 package lesson10.supermarket;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Category {
     private String name;
-    private Product[] products;
+    public TreeSet<Product> products = new TreeSet<>();
+
 
     public Category(String name) {
         this.name = name;
@@ -14,15 +14,38 @@ public class Category {
 
     public static void viewProducts(Scanner scanner, Category[] categories) {
         System.out.println("Введите название категории для просмотра товаров");
-        if (scanner.hasNextLine()) {
-            String str = scanner.nextLine();
-            for (Category category : categories) {
-                for (Product product : category.getProducts()) {
+        scanner.nextLine(); // read empty string - enter
+        String str = scanner.nextLine();
+        for (Category category : categories) {
+            if (category.getName().equals(str)) {
+                System.out.println("Sort by (price, rate):");
+
+                String sortBy = scanner.nextLine();
+                TreeSet<Product> sortedProducts;
+
+                switch (sortBy) {
+                    case "price":
+                        sortedProducts = new TreeSet<>(new ProductPriceComparator());
+                        break;
+                    case "rate":
+                        sortedProducts = new TreeSet<>(new ProductRatingComparator());
+                        break;
+                    case "name":
+                        sortedProducts = new TreeSet<>(new ProductNameComparator());
+                        break;
+                    default:
+                        System.out.println("Вы не выбрали категорию.Нажмите Enter");
+                        return;
+                }
+
+                sortedProducts.addAll(category.getProducts());
+
+                for (Product product : sortedProducts) {
                     System.out.println(product);
                 }
             }
-            System.out.println();
         }
+        System.out.println();
     }
 
     public String getName() {
@@ -33,27 +56,12 @@ public class Category {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Category)) return false;
-        Category category = (Category) o;
-        return Objects.equals(name, category.name) &&
-                Arrays.equals(products, category.products);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(name);
-        result = 31 * result + Arrays.hashCode(products);
-        return result;
-    }
-
-    public Product[] getProducts() {
+    public TreeSet<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Product[] products) {
-        this.products = products;
+    public void addProduct(Product product) {
+        products.add(product);
+
     }
 }

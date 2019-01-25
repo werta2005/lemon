@@ -1,8 +1,12 @@
 package lesson10.supermarket;
 
+
+import java.time.LocalDateTime;
 import java.util.*;
 
+
 public class Basket {
+
     private List<Product> products = new ArrayList<Product>();
 
     public List<Product> getProducts() {
@@ -26,7 +30,10 @@ public class Basket {
         }
     }
 
+
     public void buyProducts() {
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("Покупка совершена  " + now);
         this.products.clear();
     }
 

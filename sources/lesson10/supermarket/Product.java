@@ -2,7 +2,7 @@ package lesson10.supermarket;
 
 import java.util.Objects;
 
-public class Product {
+public class Product implements Comparable<Product> {
     private String name;
     private double price;
     private int rate;
@@ -48,14 +48,10 @@ public class Product {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return Double.compare(product.price, price) == 0 &&
-                rate == product.rate &&
-                Objects.equals(name, product.name);
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
+
 
     @Override
     public int hashCode() {
@@ -70,4 +66,11 @@ public class Product {
                 ", rate=" + rate +
                 '}';
     }
+
+    @Override
+    public int compareTo(Product anotherProduct) {
+        int anotherProductRate = anotherProduct.getRate();
+        return this.rate - anotherProductRate;
+    }
 }
+
