@@ -13,12 +13,11 @@ public class Basket {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 
-    public void addToBasket() {
-        Scanner scanner = new Scanner(System.in);
+    public void addToBasket(Scanner scanner) {
         System.out.println("Введите название товара");
         if (scanner.hasNextLine()) {
             String prodName = scanner.nextLine();

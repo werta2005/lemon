@@ -38,20 +38,6 @@ public class User {
         return basket;
     }
 
-    public void authenUser() {
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите логин");
-        if (scanner.hasNextLine()) {
-            this.setLogin(scanner.nextLine());
-            System.out.println("Введите пароль");
-            if (scanner.hasNextLine()) {
-                this.setPassword(scanner.nextLine());
-            }
-        }
-    }
-
-
     @Override
     public String toString() {
         return "User{" +
