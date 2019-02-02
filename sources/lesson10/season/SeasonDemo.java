@@ -11,6 +11,8 @@ public class SeasonDemo {
         printSeason(season1);
         printAllValues();
 
+        for (Season season : Season.values())
+            System.out.println(season + " " + season.getTmp() + " " + season.getDescription());
     }
 
     public static void printSeason(Season season) {
@@ -30,6 +32,7 @@ public class SeasonDemo {
 
         }
     }
+
     public static void printAllValues() {
         Season[] seasons = Season.values();
         for (Season season : seasons)
