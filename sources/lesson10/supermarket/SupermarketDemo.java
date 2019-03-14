@@ -4,42 +4,43 @@ import java.util.*;
 
 public class SupermarketDemo {
     static Scanner scanner = new Scanner(System.in);
-    static Map<String, String> users = new HashMap<>();
+    static Map<String, User> users = new HashMap<>();
 
     public static void main(String[] args) {
-        Category dress = new Category("Dress");
-        Category pants = new Category("Pants");
-        Category socks = new Category("Socks");
-        Category[] categories = {dress, pants, socks};
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> categories = categoryDAO.findAll();
 
-        User user = new User("Qwerty", "12345");
+        User user = new User();
 
-        Product product1 = new Product("Черное платье", 1599.0, 5, "Платья");
-        Product product2 = new Product("Синие брюки", 1099.0, 4, "Брюки");
-        Product product3 = new Product("Теплые носки", 89.99, 5, "Носки");
-        Product product4 = new Product("Красное платье", 12939.0, 3, "Платья");
-        Product product5 = new Product("Серые брюки", 1099.0, 4, "Брюки");
-        Product product6 = new Product("Летние носки", 39.99, 4, "Носки");
+        ProductDAO productDAO = new ProductDAO();
+        Map <Integer, Product> products = productDAO.findAll();
 
-        dress.addProduct(product4);
-        pants.addProduct(product2);
-        socks.addProduct(product3);
-        dress.addProduct(product1);
-        pants.addProduct(product5);
-        socks.addProduct(product6);
+        // dress - Черное платье
+        categories.get(0).addProduct(products.get(1));
+        // dress - Красное платье
+        categories.get(0).addProduct(products.get(4));
+
+        // pants - Синие брюки
+        categories.get(1).addProduct(products.get(3));
+        // pants - Серые брюки
+        categories.get(1).addProduct(products.get(6));
+
+        // pants - Серые брюки
+        categories.get(2).addProduct(products.get(5));
+        // pants - Серые брюки
+        categories.get(2).addProduct(products.get(5));
 
         Basket basket = new Basket();
-        List<Product> list = new ArrayList<>(Arrays.asList(product1, product3));
+        List<Product> list = new ArrayList<>(Arrays.asList(products.get(1), products.get(3)));
         basket.setProducts(list);
         user.setBasket(basket);
 
-        users.put("qwerty", "12345");
-        users.put("asdfgh", "54321");
-
+        UserDAO userDAO = new UserDAO();
+        users = userDAO.findAll();
         menu(categories, basket, user);
     }
 
-    private static void menu(Category[] categories, Basket basket, User user) {
+    private static void menu(List<Category> categories, Basket basket, User user) {
         while (true) {
             System.out.println("Введите действие:");
             System.out.println("1. AUTHENTICATION");
@@ -81,7 +82,7 @@ public class SupermarketDemo {
         }
     }
 
-    public static void viewProducts(Category[] categories) {
+    public static void viewProducts(List<Category> categories) {
         System.out.println("Введите название категории для просмотра товаров");
         scanner.nextLine(); // read empty string - enter
         String str = scanner.nextLine();
@@ -117,7 +118,7 @@ public class SupermarketDemo {
         System.out.println();
     }
 
-    public static void viewCatalog(Category[] categories) {
+    public static void viewCatalog(List<Category> categories) {
         for (Category category : categories) {
             System.out.println("Категория: " + category.getName());
         }
@@ -133,13 +134,16 @@ public class SupermarketDemo {
                 throw new WrongLoginException("Ваш логин больше 20");
             }
             if (users.containsKey(login)) {
+                User user = users.get(login);
                 System.out.println("Введите пароль");
+
                 if (scanner.hasNextLine()) {
                     String password = scanner.nextLine();
                     if (password.length() > 20) {
                         throw new WrongPasswordException("Ваш пароль больше 20");
                     }
-                    if (password.equals(users.get(login))) {
+
+                    if (password.equals(user.getPassword())) {
                         System.out.println("Вы авторизованы");
                         System.out.println();
                     } else {

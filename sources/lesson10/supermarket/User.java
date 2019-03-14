@@ -4,13 +4,19 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class User {
+    private int id;
     private String login;
     private String password;
     private Basket basket;
 
-    public User(String login, String password) {
+    public User(int id, String login, String password) {
+        this.id = id;
         this.login = login;
         this.password = password;
+        this.basket = new Basket();
+    }
+
+    public User() {
         this.basket = new Basket();
     }
 

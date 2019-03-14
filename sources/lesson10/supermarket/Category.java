@@ -1,15 +1,15 @@
 package lesson10.supermarket;
 
-import java.util.Scanner;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Category {
+    private int id;
     private String name;
     public SortedSet<Product> products = new TreeSet<>();
 
-
-    public Category(String name) {
+    public Category(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

@@ -3,16 +3,16 @@ package lesson10.supermarket;
 import java.util.Objects;
 
 public class Product implements Comparable<Product> {
+    private int id;
     private String name;
     private double price;
     private int rate;
-    private String category;
 
-    public Product(String name, double price, int rate, String category) {
+    public Product(int id, String name, double price, int rate) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.rate = rate;
-        this.category = category;
     }
 
     public String getName() {
@@ -37,14 +37,6 @@ public class Product implements Comparable<Product> {
 
     public void setRate(int rate) {
         this.rate = rate;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     @Override
