@@ -17,11 +17,9 @@ public class CategoryDAO {
             Connection connection = ConnectorDB.getConnection();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(SQL_SELECT_ALL_CATEGORIES);
-
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
-
                 categories.add(new Category(id, name));
             }
         } catch (SQLException e) {
